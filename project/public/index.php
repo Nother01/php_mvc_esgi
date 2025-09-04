@@ -18,6 +18,11 @@ switch ($uri) {
         $controller = new UserController();
         $controller->register();
         break;
+
+    case '/logout':
+        $controller = new UserController();
+        $controller->logout();
+        break;
         
     case '/tasks':
         $controller = new TaskController();
