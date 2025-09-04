@@ -40,28 +40,6 @@ class TaskController {
         include __DIR__ . '/../Views/tasks.php';
     }
 
-    public function create() {
-        $this->userController->checkAuth();
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $status = $_POST['status'] ?? 'todo';
-            $userId = $_SESSION['user_id'];
-
-            if ($this->taskModel->create($title, $description, $userId, $status)) {
-                $_SESSION['success'] = 'tache créée avec succès';
-            } else {
-                $_SESSION['error'] = 'erreur lors de la création';
-            }
-
-            header('Location: /tasks');
-            exit;
-        }
-
-        include __DIR__ . '/../Views/task_create.php';
-    }
-
     public function edit($id) {
         $this->userController->checkAuth();
         
@@ -89,7 +67,7 @@ class TaskController {
             exit;
         }
 
-        include __DIR__ . '/../Views/task_edit.php';
+        include __DIR__ . '/../Views/task_action.php';
     }
 
     public function delete($id) {

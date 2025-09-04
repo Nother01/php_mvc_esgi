@@ -13,19 +13,42 @@ switch ($uri) {
         $controller = new UserController();
         $controller->login();
         break;
-            
+        
     case '/register':
         $controller = new UserController();
         $controller->register();
         break;
-
+        
     case '/tasks':
         $controller = new TaskController();
         $controller->index();
         break;
         
     default:
-        http_response_code(404);
-        echo "Page non trouvée";
+        $parts = explode('/', trim($uri, '/'));
+        
+        if (count($parts) == 3 && $parts[0] == 'tasks') {
+            $action = $parts[1];
+            $id = $parts[2];
+            
+            if (is_numeric($id)) {
+                $controller = new TaskController();
+                
+                if ($action == 'edit') {
+                    $controller->edit($id);
+                } elseif ($action == 'delete') {
+                    $controller->delete($id);
+                } else {
+                    http_response_code(404);
+                    echo "Page non trouvée";
+                }
+            } else {
+                http_response_code(404);
+                echo "Page non trouvée";
+            }
+        } else {
+            http_response_code(404);
+            echo "Page non trouvée";
+        }
         break;
 }

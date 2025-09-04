@@ -25,7 +25,6 @@
         <h1>Mes Tâches</h1>
         <div>
             <span>Bonjour <?= $_SESSION['user_name'] ?></span>
-            <a href="/tasks/create" class="btn">Nouvelle Tâche</a>
             <a href="/logout" class="btn btn-danger">Déconnexion</a>
         </div>
     </div>
