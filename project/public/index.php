@@ -18,6 +18,11 @@ switch ($uri) {
         $controller = new UserController();
         $controller->register();
         break;
+
+    case '/tasks':
+        $controller = new TaskController();
+        $controller->index();
+        break;
         
     default:
         http_response_code(404);
