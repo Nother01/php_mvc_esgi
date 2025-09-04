@@ -35,7 +35,12 @@ class TaskController {
             exit;
         }
         
-        $tasks = $this->taskModel->findByUserId($userId);
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = $page < 1 ? 1 : $page;
+        
+        $paginationResult = $this->taskModel->findByUserIdPaginated($userId, $page, 5);
+        $tasks = $paginationResult['tasks'];
+        $pagination = $paginationResult;
 
         include __DIR__ . '/../Views/tasks.php';
     }
@@ -67,7 +72,7 @@ class TaskController {
             exit;
         }
 
-        include __DIR__ . '/../Views/task_edit.php';
+        include __DIR__ . '/../Views/task_action.php';
     }
 
     public function delete($id) {

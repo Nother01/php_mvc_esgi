@@ -32,6 +32,32 @@ class Task {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function findByUserIdPaginated($user_id, $page = 1, $perPage = 5) {
+        $offset = ($page - 1) * $perPage;
+        
+        $sql = "SELECT * FROM " . $this->table . " WHERE user_id = :user_id ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':limit', $perPage, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $countSql = "SELECT COUNT(*) as total FROM " . $this->table . " WHERE user_id = :user_id";
+        $countStmt = $this->db->prepare($countSql);
+        $countStmt->bindParam(':user_id', $user_id);
+        $countStmt->execute();
+        $total = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
+        
+        return [
+            'tasks' => $tasks,
+            'total' => $total,
+            'page' => $page,
+            'perPage' => $perPage,
+            'totalPages' => ceil($total / $perPage)
+        ];
+    }
+
     public function findById($id, $user_id) {
         $sql = "SELECT * FROM " . $this->table . " WHERE id = :id AND user_id = :user_id";
         $stmt = $this->db->prepare($sql);
