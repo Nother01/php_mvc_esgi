@@ -13,6 +13,12 @@ switch ($uri) {
         $controller = new UserController();
         $controller->login();
         break;
+            
+    case '/register':
+        $controller = new UserController();
+        $controller->register();
+        break;
+        
     default:
         http_response_code(404);
         echo "Page non trouvée";
