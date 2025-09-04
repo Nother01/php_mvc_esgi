@@ -24,7 +24,6 @@
     <div class="header">
         <h1>Mes Tâches</h1>
         <div>
-            <span>Bonjour <?= $_SESSION['user_name'] ?></span>
             <a href="/logout" class="btn btn-danger">Déconnexion</a>
         </div>
     </div>
@@ -84,11 +83,16 @@
                     </span>
                 </div>
                 
-                <p><?= htmlspecialchars($task['description']) ?></p>
+                <div class="task-description">
+                    <p><?= htmlspecialchars($task['description']) ?></p>
+                </div>
                 
-                <small>Créée le: <?= date('d/m/Y H:i', strtotime($task['created_at'])) ?></small>
+                <div class="task-meta">
+                    <small>Créée le: <?= date('d/m/Y H:i', strtotime($task['created_at'])) ?></small>
+                </div>
                 
                 <div class="actions">
+                    <br>
                     <a href="/tasks/edit/<?= $task['id'] ?>" class="btn btn-success">Modifier</a>
                     <a href="/tasks/delete/<?= $task['id'] ?>" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">Supprimer</a>
                 </div>
