@@ -72,7 +72,7 @@ class TaskController {
             exit;
         }
 
-        include __DIR__ . '/../Views/task_action.php';
+        include __DIR__ . '/../Views/task_edit.php';
     }
 
     public function delete($id) {
