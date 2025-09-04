@@ -1,1 +1,23 @@
-.
+CREATE DATABASE IF NOT EXISTS php_mvc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE php_mvc;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(1024) NOT NULL,
+  description VARCHAR(1024) NOT NULL,
+  status ENUM('todo', 'in_progress', 'done') DEFAULT 'todo',
+  user_id INT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_user_id ON tasks(user_id);
