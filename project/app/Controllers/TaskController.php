@@ -10,7 +10,9 @@ class TaskController {
     public function __construct() {
         $this->taskModel = new Task();
         $this->userController = new UserController();
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function index() {

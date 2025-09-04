@@ -7,7 +7,9 @@ class UserController {
 
     public function __construct() {
         $this->userModel = new User();
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function login() {
